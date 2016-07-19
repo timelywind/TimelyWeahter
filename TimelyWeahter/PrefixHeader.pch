@@ -1,0 +1,25 @@
+//
+//  PrefixHeader.pch
+//  Jianzhiweishi
+//
+//  Created by qianfeng on 16/2/19.
+//  Copyright © 2016年 qianfeng. All rights reserved.
+//
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+
+
+#import "PreConfig.h"
+#import "UIView+Extension.h"
+
+
+#define MAS_SHORTHAND_GLOBALS
+
+#define YUScreenW [UIScreen mainScreen].bounds.size.width
+#define YUScreenH [UIScreen mainScreen].bounds.size.height
+
+#define  iPhone5s   (YUScreenW == 320.f && YUScreenH == 568.f ? YES : NO)
+#define  iPhone6    ((YUScreenW >= 375.f && YUScreenH >= 667.f ? YES : NO) || (YUScreenW >= 414.f && YUScreenH >= 736.f ? YES : NO))
+
+#endif /* PrefixHeader_pch */
