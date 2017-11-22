@@ -229,6 +229,9 @@ static NSString *TYCityName = @"TYCityName";
             [self.tableView.mj_header endRefreshing];
 
         } else {
+            
+            [weakSelf.tableView reloadData];
+            self.tableView.alpha = 1.0;
 
             [self.tableView.mj_header endRefreshing];
             [TRYCustomHud showHudWithTipText:@"网络异常，请检查您的网络" delay:0.8];
@@ -288,11 +291,17 @@ static NSString *TYCityName = @"TYCityName";
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
+    if (self.weatherModels.count == 0) {
+        return 0;
+    }
     return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    if (self.weatherModels.count == 0) {
+        return 0;
+    }
     return 1;
 }
 
