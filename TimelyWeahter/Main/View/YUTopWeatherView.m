@@ -2,8 +2,8 @@
 //  YUTopWeatherView.m
 //  TimelyWeahter
 //
-//  Created by qianfeng on 16/3/1.
-//  Copyright © 2016年 qianfeng. All rights reserved.
+//  Created by timely on 15/3/1.
+//  Copyright © 2016年 timely. All rights reserved.
 //
 
 #import "YUTopWeatherView.h"
@@ -12,10 +12,11 @@
 #import "UIColor+Extension.h"
 #import "NSDate+Extenion.h"
 #import "YUWeatherDataModel.h"
-#import <UIButton+WebCache.h>
 #import "YUVerticalButton.h"
 #import "YUNowWeather.h"
 #import "NSDate+Formatter.h"
+#import "PreConfig.h"
+#import "UIView+Extension.h"
 
 #define labelW 32
 #define leftMargin (iPhone6? 30 :10)
@@ -24,6 +25,7 @@
 #define dayViewH 20
 #define btnH 60
 #define weatherTrendViewH 140
+
 @interface YUTopWeatherView ()
 @property (nonatomic, strong) YUWeatherTrendView *weatherTrendView;
 
@@ -55,7 +57,36 @@
     return [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([self class]) owner:nil options:nil] lastObject];
 }
 
+
 - (void)awakeFromNib
+{
+    [super awakeFromNib];
+    
+    [self setupSubViews];
+    
+}
+
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        
+        [self setupSubViews];
+    }
+    return self;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        [self setupSubViews];
+    }
+    return self;
+}
+
+// 创建子视图
+- (void)setupSubViews
 {
     // 星期
     [self addSubview:self.weekDaysView];
@@ -93,7 +124,7 @@
         
         [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         btn.titleLabel.font = [UIFont systemFontOfSize:13];
-
+        
         [self addSubview:btn];
         
         btn.userInteractionEnabled = NO;
@@ -106,22 +137,27 @@
         YUVerticalButton *btn = [YUVerticalButton buttonWithType:UIButtonTypeCustom];
         btn.frame = CGRectMake(leftMargin+(labelW+centerMargin)*i, topMargin, labelW, btnH);
         
-
+        
         [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         btn.titleLabel.font = [UIFont systemFontOfSize:13];
-
+        
         [self addSubview:btn];
         btn.userInteractionEnabled = NO;
         [self.nightBtns addObject:btn];
     }
     
+    if (_weatherTrendView == nil) {
+        _weatherTrendView = [[YUWeatherTrendView alloc]init];
+        [self addSubview:_weatherTrendView];
+    }
 }
+
 
 - (void)setNowWeather:(YUNowWeather *)nowWeather
 {
     _nowWeather = nowWeather;
     self.cityLabel.text = nowWeather.city;
-    [self.weatherBtn sd_setImageWithURL:[NSURL URLWithString:nowWeather.weather_pic] forState:UIControlStateNormal];
+    [self.weatherBtn try_setImageWithURLString:nowWeather.weather_pic forState:UIControlStateNormal];
     [self.weatherBtn setTitle:nowWeather.weather forState:UIControlStateNormal];
     
     self.temperatureLabel.text = [NSString stringWithFormat:@"%@ ℃",nowWeather.temperature];
@@ -143,21 +179,10 @@
     
     [self setupViewWith:weatherModels];
     
-    [self.weatherTrendView removeFromSuperview];
-    self.weatherTrendView = nil;
-    
-    YUWeatherTrendView *weatherTrendView = [[YUWeatherTrendView alloc]init];
-    self.weatherTrendView = weatherTrendView;
-    
-    [self addSubview:weatherTrendView];
-    
-    
     self.weatherTrendView.weatherModels = weatherModels;
-    
     [self.weatherTrendView setNeedsDisplay];
     
     [self startTrendAnimation];
-    
 }
 
 
@@ -188,7 +213,7 @@
         // day天气图片
         UIButton *dayButton = self.DayBtns[i];
         [dayButton setTitle:model.day_weather forState:UIControlStateNormal];
-        [dayButton sd_setImageWithURL:[NSURL URLWithString:model.day_weather_pic] forState:UIControlStateNormal];
+        [dayButton try_setImageWithURLString:model.day_weather_pic forState:UIControlStateNormal];
         dayButton.titleLabel.font = [UIFont systemFontOfSize:13];
         if (model.day_weather.length > 2) {
             dayButton.titleLabel.font = [UIFont systemFontOfSize:8];
@@ -196,7 +221,7 @@
         
         UIButton *nightButton = self.nightBtns[i];
         [nightButton setTitle:model.night_weather forState:UIControlStateNormal];
-        [nightButton sd_setImageWithURL:[NSURL URLWithString:model.night_weather_pic] forState:UIControlStateNormal];
+        [nightButton try_setImageWithURLString:model.night_weather_pic forState:UIControlStateNormal];
         nightButton.titleLabel.font = [UIFont systemFontOfSize:13];
         if (model.night_weather.length > 2) {
             nightButton.titleLabel.font = [UIFont systemFontOfSize:8];
@@ -218,9 +243,8 @@
 
 - (void)startTrendAnimation{
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self.weatherTrendView startTopLineAnimation];
-        [self.weatherTrendView startBottomAnimation];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.weatherTrendView startTempLineAnimation];
     });
 }
 

@@ -1,12 +1,12 @@
 //
 //  YUVerticalButton.m
-//  百思不得J
 //
-//  Created by qianfeng on 16/2/17.
-//  Copyright © 2016年 qianfeng. All rights reserved.
+//  Created by timely on 15/2/17.
+//  Copyright © 2016年 timely. All rights reserved.
 //
 
 #import "YUVerticalButton.h"
+#import "UIView+Extension.h"
 
 @implementation YUVerticalButton
 

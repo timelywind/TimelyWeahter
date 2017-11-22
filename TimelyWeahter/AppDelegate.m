@@ -7,10 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "YUMainViewController.h"
-#import "YUNavigationController.h"
-#import "YUNewsViewController.h"
-#import "YUNetHelp.h"
+#import "TYGuideTool.h"
 
 @interface AppDelegate ()
 
@@ -22,31 +19,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window =[[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
     [self.window makeKeyAndVisible];
-    
-    
-    NSString *key = @"CFBundleShortVersionString";
-    
-    // 获得当前版本号
-    NSString *currentVersion = [NSBundle mainBundle].infoDictionary[key];
-    // 获得沙盒中存储的版本号
-    NSString *sanboxVersion = [[NSUserDefaults standardUserDefaults] valueForKey:key];
-    
-    if (![currentVersion isEqualToString:sanboxVersion]) {
-        
-        self.window.rootViewController = [[YUNewsViewController alloc]init];
+    self.window.rootViewController = [TYGuideTool configRootViewController];
 
-        // 储存
-        NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-        [ud setObject:currentVersion forKey:key];
-        [ud synchronize];
-    } else {
-    
-    YUMainViewController *mainVc = [[YUMainViewController alloc]init];
-    YUNavigationController *nav = [[YUNavigationController alloc]initWithRootViewController:mainVc];
-    self.window.rootViewController= nav;
-    }
-
-    
     return YES;
 }
 

@@ -2,15 +2,17 @@
 //  YUNewsViewController.m
 //  weibo
 //
-//  Created by qianfeng on 16/1/16.
-//  Copyright (c) 2016年 qianfeng. All rights reserved.
+//  Created by timely on 15/1/16.
+//  Copyright (c) 2016年 timely. All rights reserved.
 //
 
-#define YUNewfeatureCount  3
+#define YUNewfeatureCount  1
 
 #import "YUNewsViewController.h"
-#import "YUMainViewController.h"
 #import "YUNavigationController.h"
+#import "TLCityPickerController.h"
+#import "UIView+Extension.h"
+#import "PreConfig.h"
 
 @interface YUNewsViewController () <UIScrollViewDelegate>
 
@@ -35,8 +37,8 @@
     scrollView.delegate = self;
     
     // 2.添加图片到scrollView中
-    CGFloat scrollW = scrollView.width;
-    CGFloat scrollH = scrollView.height;
+    CGFloat scrollW = scrollView.bounds.size.width;
+    CGFloat scrollH = scrollView.bounds.size.height;
     for (int i = 0; i<YUNewfeatureCount; i++)
     {
         UIImageView *imageView = [[UIImageView alloc] init];
@@ -45,7 +47,7 @@
         imageView.y = 0;
         imageView.x = i * scrollW;
         // 显示图片
-        NSString *name = [NSString stringWithFormat:@"new_feature_%d", i + 1];
+        NSString *name = [NSString stringWithFormat:@"new_feature_%d.jpg", i + 1];
         imageView.image = [UIImage imageNamed:name];
         [scrollView addSubview:imageView];
         
@@ -63,18 +65,18 @@
     scrollView.showsHorizontalScrollIndicator = NO;
     
     // 4.添加pageControl
-    UIPageControl *pageControl = [[UIPageControl alloc] init];
-    pageControl.numberOfPages = YUNewfeatureCount;
-    pageControl.backgroundColor = [UIColor redColor];
-    pageControl.currentPageIndicatorTintColor = WColorRGB(253, 98, 42);
-    pageControl.pageIndicatorTintColor = WColorRGB(189, 189, 189);
-    pageControl.centerX = scrollW * 0.5;
-    pageControl.centerY = scrollH - 50;
-    [self.view addSubview:pageControl];
-    self.pageControl = pageControl;
-    
-    
-    
+    if (YUNewfeatureCount > 1) {
+        UIPageControl *pageControl = [[UIPageControl alloc] init];
+        pageControl.numberOfPages = YUNewfeatureCount;
+        pageControl.backgroundColor = [UIColor redColor];
+        pageControl.currentPageIndicatorTintColor = WColorRGB(253, 98, 42);
+        pageControl.pageIndicatorTintColor = WColorRGB(189, 189, 189);
+        pageControl.centerX = scrollW * 0.5;
+        pageControl.centerY = scrollH - 50;
+        [self.view addSubview:pageControl];
+        self.pageControl = pageControl;
+    }
+
 }
 - (void)setupLastImageView:(UIImageView *)imageView
 {
@@ -84,7 +86,7 @@
 
     UIButton *startBtn = [[UIButton alloc] init];
     startBtn.size = CGSizeMake(100, 40);
-    startBtn.center = CGPointMake(YUScreenW * 0.5, YUScreenH * 0.8);
+    startBtn.center = CGPointMake(self.view.bounds.size.width * 0.5, self.view.bounds.size.height * 0.8);
     startBtn.backgroundColor = [[UIColor colorWithWhite:0.800 alpha:1.000]colorWithAlphaComponent:0.3];
     [startBtn setTitle:@"开始体验" forState:UIControlStateNormal];
     [startBtn addTarget:self action:@selector(startClick) forControlEvents:UIControlEventTouchUpInside];
@@ -94,7 +96,7 @@
 
 - (void)startClick
 {
-   [UIView animateWithDuration:1.5 animations:^{
+   [UIView animateWithDuration:0.2 animations:^{
        
        self.scrollView.alpha = 0.0;
        self.pageControl.alpha = 0.0;
@@ -102,9 +104,13 @@
    } completion:^(BOOL finished) {
        
        UIWindow *window = [UIApplication sharedApplication].keyWindow;
-       YUMainViewController *mainVc = [[YUMainViewController alloc]init];
-       YUNavigationController *nav = [[YUNavigationController alloc]initWithRootViewController:mainVc];
-       window.rootViewController= nav;
+       TLCityPickerController *cityPickerVC = [[TLCityPickerController alloc] init];
+       // 设置定位城市
+       //        cityPickerVC.locationCityID = self.locationCity;
+       cityPickerVC.type = TLCityPickerTypeFirst;
+       // 热门城市，需手动设置
+       cityPickerVC.hotCitys = @[@"100010000", @"200010000", @"300210000", @"600010000", @"300110000"];
+       window.rootViewController = [[YUNavigationController alloc] initWithRootViewController:cityPickerVC];
    }];
 
 }

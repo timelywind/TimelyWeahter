@@ -2,8 +2,8 @@
 //  YUWeatherDataModel.h
 //  TimelyWeahter
 //
-//  Created by qianfeng on 16/3/4.
-//  Copyright © 2016年 qianfeng. All rights reserved.
+//  Created by timely on 15/3/4.
+//  Copyright © 2016年 timely. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

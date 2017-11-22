@@ -2,13 +2,15 @@
 //  YUHeaderView.m
 //  TimelyWeahter
 //
-//  Created by qianfeng on 16/3/1.
-//  Copyright © 2016年 qianfeng. All rights reserved.
+//  Created by timely on 15/3/1.
+//  Copyright © 2016年 timely. All rights reserved.
 //
 
 #import "YUHeaderView.h"
 #import "YUWeatherTrendView.h"
 #import "YUTopWeatherView.h"
+#import "UIView+Extension.h"
+#import "PreConfig.h"
 
 @interface YUHeaderView ()
 
@@ -54,9 +56,8 @@
     
     [self.weatherTrendView applyBasicAnimation:opacityAnimation toLayer:self.weatherTrendView.layer];
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self.weatherTrendView startTopLineAnimation];
-        [self.weatherTrendView startBottomAnimation];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.weatherTrendView startTempLineAnimation];
     });
 }
 

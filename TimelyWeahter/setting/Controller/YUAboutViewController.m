@@ -2,8 +2,8 @@
 //  YUAboutViewController.m
 //  TimelyWeahter
 //
-//  Created by qianfeng on 16/3/8.
-//  Copyright © 2016年 qianfeng. All rights reserved.
+//  Created by timely on 15/3/8.
+//  Copyright © 2016年 timely. All rights reserved.
 //
 
 #import "YUAboutViewController.h"
@@ -21,7 +21,7 @@
     myImageView.image = [UIImage imageNamed:@"weather"];
     [self.view addSubview:myImageView];
     
-    myImageView.frame = CGRectMake(0, 0, YUScreenW, YUScreenH);
+    myImageView.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height);
     
 }
 
