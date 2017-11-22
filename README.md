@@ -3,8 +3,8 @@
 
 
 #效果：
-## 天气主页
+## 1、天气主页
 ![Aaron Swartz](https://github.com/timelywind/TimelyWeahter/raw/master/TimelyWeahter/效果图/mainPage.png)
 
-## 切换城市界面
+## 2、切换城市界面
 ![Aaron Swartz](https://github.com/timelywind/TimelyWeahter/raw/master/TimelyWeahter/效果图/cityPage.png)
