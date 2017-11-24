@@ -108,7 +108,7 @@
     for (int i = 0 ;i < 7 && i < self.trendModelArr.count; i++) {
         
         YUWeatherDataModel *model = (YUWeatherDataModel * )self.trendModelArr[i];
-        CGPoint topPoint = CGPointMake(model.centerX,self.height+4- ([model.day_air_temperature integerValue]-self.minLow)/maxBetween*self.height);
+        CGPoint topPoint = CGPointMake(model.centerX,self.height- ([model.day_air_temperature integerValue]-self.minLow)/maxBetween*self.height);
         if(i==0){
             [self.topLinePath moveToPoint:topPoint];
         }else{
@@ -125,7 +125,7 @@
     
     for (int i = 0 ; i < 7 && i < self.trendModelArr.count; i++) {
         YUWeatherDataModel *model = (YUWeatherDataModel *)self.trendModelArr[i];
-        CGPoint bottomPoint = CGPointMake(model.centerX, self.height-4- ([model.night_air_temperature integerValue]-self.minLow)/maxBetween*self.height);
+        CGPoint bottomPoint = CGPointMake(model.centerX, self.height- ([model.night_air_temperature integerValue]-self.minLow)/maxBetween*self.height);
         
         if(i==0){
             [self.bottomLinePath moveToPoint:bottomPoint];
@@ -137,7 +137,6 @@
         if (bottomPoint.y > 130) {
             bottomPoint.y -= 10;
         }
-        
         UIBezierPath *tempPath = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(bottomPoint.x - pointRad, bottomPoint.y - pointRad, pointRad * 2, pointRad * 2) cornerRadius:pointRad];
         [bottomColor set];
         [tempPath fill];

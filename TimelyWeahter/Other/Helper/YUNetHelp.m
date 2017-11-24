@@ -7,6 +7,7 @@
 //
 
 #import "YUNetHelp.h"
+#import "NSDate+Formatter.h"
 
 static YUNetHelp *_shareManager;
 
@@ -102,7 +103,32 @@ static YUNetHelp *_shareManager;
 
 
 
-
++ (void)requestWeatherForCity:(NSString *)cityName complete:(void (^)(BOOL success, id result))complete
+{
+    
+    NSString *nowDate = [NSDate currentDateStringWithFormat:@"yyyyMMddHHmmss"];
+    
+    NSString *url = @"9-2";
+    NSString *secret = @"5cc4274ccad348ba86b53e5971082a6b";
+    //    NSString *sign = [NSString stringWithFormat:@"area%@needIndex1needMoreDay1showapi_appid16424showapi_timestamp%@%@",area,nowDate,secret];
+    //    NSString *md5Sign = [sign md532BitLower];
+    
+    NSDictionary *params = @{
+                             @"area":cityName ? : @"",
+                             @"needIndex":@1,
+                             @"needMoreDay":@1,
+                             @"showapi_appid":@"16424",
+                             @"showapi_timestamp":nowDate,
+                             @"showapi_sign":secret,
+                             };
+    
+    [[self shareManager] POST:url parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        complete(YES, responseObject);
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        complete(NO,error.localizedDescription);
+    }];
+    
+}
 
 
 

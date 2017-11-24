@@ -24,5 +24,7 @@
 
 - (void)isReachToWeb;
 
++ (void)requestWeatherForCity:(NSString *)cityName complete:(void (^)(BOOL success, id result))complete;
+
 @end
 

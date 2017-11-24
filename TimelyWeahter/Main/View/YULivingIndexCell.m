@@ -24,6 +24,9 @@
 @implementation YULivingIndexCell
 
 - (void)awakeFromNib {
+    
+    [super awakeFromNib];
+    
     self.backgroundColor = [[UIColor blueColor] colorWithAlphaComponent:0.15];
 }
 

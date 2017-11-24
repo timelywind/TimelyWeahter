@@ -8,7 +8,6 @@
 
 #import "YUMainViewController.h"
 #import "YUNetHelp.h"
-#import "NSDate+Formatter.h"
 #import "NSString+MD5.h"
 #import "YUTopWeatherView.h"
 #import "YUWeatherDataModel.h"
@@ -161,26 +160,9 @@ static NSString *TYCityName = @"TYCityName";
     }
 
     self.area = area;
-
-    self.titleStr = area;
     
-    NSString *nowDate = [NSDate currentDateStringWithFormat:@"yyyyMMddHHmmss"];
-
-    NSString *path = @"9-2";
-    NSString *secret = @"5cc4274ccad348ba86b53e5971082a6b";
-//    NSString *sign = [NSString stringWithFormat:@"area%@needIndex1needMoreDay1showapi_appid16424showapi_timestamp%@%@",area,nowDate,secret];
-//    NSString *md5Sign = [sign md532BitLower];
-    
-    NSDictionary *params = @{
-                             @"area":area,
-                             @"needIndex":@1,
-                             @"needMoreDay":@1,
-                             @"showapi_appid":@"16424",
-                             @"showapi_timestamp":nowDate,
-                             @"showapi_sign":secret,
-                             };
     __weak typeof (self) weakSelf = self;
-    [YUNetHelp POSTWithExtraUrl:path andParam:params andComplete:^(BOOL success, id result) {
+    [YUNetHelp requestWeatherForCity:area complete:^(BOOL success, id result) {
         if (success) {
 
             NSError *error = nil;
@@ -220,8 +202,10 @@ static NSString *TYCityName = @"TYCityName";
                 }];
                 
                 NSUserDefaults * df = [NSUserDefaults standardUserDefaults];
-                [df setObject:self.area forKey:@"TYCityName"];
+                [df setObject:area forKey:@"TYCityName"];
                 [df synchronize];
+                
+                self.titleStr = area;
             }
             
             [weakSelf.tableView reloadData];
