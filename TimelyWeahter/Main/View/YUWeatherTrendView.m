@@ -60,7 +60,8 @@
 
 - (void)setupData{
     if(self.trendModelArr.count > 0){
-        self.minLow = 100;
+        self.minLow = 1000;
+        self.maxHigh = -1000;
         for (int i = 0; i < self.trendModelArr.count; i++) {
             YUWeatherDataModel *model = (YUWeatherDataModel*)self.trendModelArr[i];
             
@@ -72,12 +73,13 @@
                 self.minLow = [model.night_air_temperature integerValue];
                 
             }
+
             [self.highTemps addObject:model.day_air_temperature];
             [self.lowTemps addObject:model.night_air_temperature];
         }
     }
-    self.maxHigh += 1;
-    self.minLow -= 1;
+    self.maxHigh += 2;
+    self.minLow -= 2;
 
 }
 
@@ -134,13 +136,13 @@
             [self.bottomLinePath moveToPoint:bottomPoint];
         }
 
-        if (bottomPoint.y > 130) {
-            bottomPoint.y -= 10;
-        }
         UIBezierPath *tempPath = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(bottomPoint.x - pointRad, bottomPoint.y - pointRad, pointRad * 2, pointRad * 2) cornerRadius:pointRad];
         [bottomColor set];
         [tempPath fill];
         
+        if (bottomPoint.y > 130) {
+            bottomPoint.y -= 10;
+        }
         [[NSString stringWithFormat:@"%@℃",model.night_air_temperature] drawAtPoint:bottomPoint withAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12],NSForegroundColorAttributeName:bottomColor}];
     }
  
