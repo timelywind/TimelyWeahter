@@ -69,31 +69,14 @@
 {
     if (self.childViewControllers.count > 0) {
         
-        
-        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        
-        [button setTitle:@"返回" forState:UIControlStateNormal];
-        
-        [button setImage:[UIImage imageNamed:@"navigationButtonReturnClick"] forState:UIControlStateNormal];
-        button.titleLabel.font = [UIFont systemFontOfSize:15];
-
-        button.size = CGSizeMake(70, 30);
-        
-        button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-        
-        button.contentEdgeInsets = UIEdgeInsetsMake(0, -10, 0, 0);
-        
-        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-
-        [button addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
-        
-        // 修改导航栏左边的item
-        viewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:button];
-        
+        UIImage *image = [UIImage imageNamed:@"backItemImage"];
+        UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithImage:[image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
+        viewController.navigationItem.leftBarButtonItem = leftItem;
         viewController.hidesBottomBarWhenPushed = YES;
     }
-    
+
     [super pushViewController:viewController animated:animated];
+    self.interactivePopGestureRecognizer.delegate = nil;
 }
 
 - (void)back

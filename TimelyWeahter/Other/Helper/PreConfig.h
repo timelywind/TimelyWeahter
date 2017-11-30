@@ -15,8 +15,8 @@
 #define  iPhone6    ((YUScreenW >= 375.f && YUScreenH >= 667.f ? YES : NO) || (YUScreenW >= 414.f && YUScreenH >= 736.f ? YES : NO))
 
 // 与6s屏幕比例
-#define TRYScreenWScale (kScreenWidth/375.0)
-#define TRYScreenHScale (kScreenHeight/667.0)
+#define TRYScreenWScale (YUScreenW/375.0)
+#define TRYScreenHScale (YUScreenH/667.0)
 
 #define kStatusBarHeight [[UIApplication sharedApplication] statusBarFrame].size.height
 #define kNavBarHeight 44.0

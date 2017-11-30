@@ -2,7 +2,7 @@
 //  TYGuideTool.m
 //  NativeEastSports
 //
-//  Created by administrator on 17/5/19.
+//  Created by weahter on 17/5/19.
 //  Copyright © 2017年 timely. All rights reserved.
 //
 

@@ -21,7 +21,41 @@
     [self.window makeKeyAndVisible];
     self.window.rootViewController = [TYGuideTool configRootViewController];
 
+    // 配置本地通知
+    [self configLocalNotificationWithOptions:launchOptions];
+    
     return YES;
+}
+
+#pragma mark --**************** 本地通知
+
+// 本地通知回调函数，当应用程序在前台时调用
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
+    //    NSLog(@"noti:%@",notification);
+    
+    [self handReceiveLocalNotification:notification.userInfo application:application];
+    
+}
+// 处理本地通知
+- (void)handReceiveLocalNotification:(NSDictionary *)userInfo application:(UIApplication *)application
+{
+    // 更新显示的徽章个数
+    NSInteger badge = [UIApplication sharedApplication].applicationIconBadgeNumber;
+    badge--;
+    badge = badge >= 0 ? badge : 0;
+    [UIApplication sharedApplication].applicationIconBadgeNumber = badge;
+}
+// 配置本地通知
+- (void)configLocalNotificationWithOptions:(NSDictionary *)launchOptions
+{
+    
+    // ios8后，需要添加这个注册，才能得到授权
+    if ([[UIApplication sharedApplication] respondsToSelector:@selector(registerUserNotificationSettings:)]) {
+        UIUserNotificationType type =  UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound;
+        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:type
+                                                                                 categories:nil];
+        [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+    }
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

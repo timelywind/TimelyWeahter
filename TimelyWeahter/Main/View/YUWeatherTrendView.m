@@ -86,6 +86,10 @@
 
 - (void)drawRect:(CGRect)rect{
     
+    if(self.trendModelArr.count <= 0) {
+        return;
+    }
+    
     [self.topLinePath removeAllPoints];
     [self.bottomLinePath removeAllPoints];
     

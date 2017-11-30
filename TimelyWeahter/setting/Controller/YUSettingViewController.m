@@ -10,6 +10,7 @@
 #import "NSString+File.h"
 #import "YUAboutViewController.h"
 #import "PreConfig.h"
+#import "YUSetNotificationController.h"
 
 @interface YUSettingViewController ()
 
@@ -85,9 +86,11 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row == 1) {
-        YUAboutViewController *aboutVc = [[YUAboutViewController alloc]init];
         
-        [self.navigationController pushViewController:aboutVc animated:YES];
+        YUSetNotificationController *setSpeechCtrl = [[UIStoryboard storyboardWithName:@"StoryboardSet" bundle:nil] instantiateViewControllerWithIdentifier:@"YUSetNotificationController"];
+        
+//        YUSetNotificationController *setSpeechCtrl = [[YUSetNotificationController alloc] init];
+        [self.navigationController pushViewController:setSpeechCtrl animated:YES];
     } else if (indexPath.row == 2) {
 
         UIAlertController * alert=[UIAlertController alertControllerWithTitle:@"提示" message:@"清理缓存 ？" preferredStyle:UIAlertControllerStyleAlert];
