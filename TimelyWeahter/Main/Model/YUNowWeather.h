@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 
 @interface YUNowWeather : NSObject
+
+@property (nonatomic, copy) NSString *updateTime;
 /**  */
 @property (nonatomic,copy) NSString *aqi;
 /**  */

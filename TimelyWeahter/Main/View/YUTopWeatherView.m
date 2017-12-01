@@ -162,7 +162,7 @@
     
     self.temperatureLabel.text = [NSString stringWithFormat:@"%@ ℃",nowWeather.temperature];
     self.airLabel.text = [NSString stringWithFormat:@"空气 %@",nowWeather.aqi];
-    self.updateTimeLabel.text = [NSString stringWithFormat:@"上次更新时间 %@",[NSDate currentDateStringWithFormat:@"HH:mm"]];
+    self.updateTimeLabel.text = [NSString stringWithFormat:@"上次更新 %@", nowWeather.updateTime];
     
     NSString *str = [[NSDate date] getChineseCalendarWithDate:[NSDate date]];
     NSString *nowDate = [NSDate currentDateStringWithFormat:@"MM月dd日"];

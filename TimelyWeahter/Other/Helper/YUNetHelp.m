@@ -1,6 +1,5 @@
 //
 //  YUNetHelp.m
-//  Jianzhiweishi
 //
 //  Created by timely on 15/2/20.
 //  Copyright © 2016年 timely. All rights reserved.
@@ -12,21 +11,14 @@
 static YUNetHelp *_shareManager;
 
 @implementation YUNetHelp
-// 16424   5cc4274ccad348ba86b53e5971082a6b
 + (instancetype)shareManager {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         // AFHTTPSessionManager 单例对象，可以在程序短时间内发起多个请求时，降低系统开销
-        _shareManager = [[super allocWithZone:NULL] initWithBaseURL:[NSURL URLWithString:@"https://route.showapi.com"]];// 这里使用 BaseUrl ，是让 AFNetworking 减少每次请求服务器时候，提升查找目标服务器地址的速度，而且这里建议直接使用 ip 地址。
-        // 设置网络请求 SSL 功能，使用（HTTPS）时开启
-        //		_shareManager.securityPolicy = [AFSecurityPolicy   policyWithPinningMode:AFSSLPinningModeNone];
-        // 设置请求内容的序列化方式
+        _shareManager = [[super allocWithZone:NULL] initWithBaseURL:[NSURL URLWithString:@"https://route.showapi.com"]];
         _shareManager.requestSerializer = [AFHTTPRequestSerializer serializer];
-        // 设置网络超时的时间，10秒。
         _shareManager.requestSerializer.timeoutInterval = 10;
-        // 设置服务器返回数据的序列化方式
         _shareManager.responseSerializer = [AFHTTPResponseSerializer serializer];
-        // 设置可接受的服务器返回数据的格式
         _shareManager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript", @"text/html", @"text/xml", @"text/plain", nil];
 //        [self isReachToWeb];
     });

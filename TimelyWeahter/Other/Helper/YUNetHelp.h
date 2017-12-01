@@ -1,6 +1,5 @@
 //
 //  YUNetHelp.h
-//  Jianzhiweishi
 //
 //  Created by timely on 15/2/20.
 //  Copyright © 2016年 timely. All rights reserved.

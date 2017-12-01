@@ -10,4 +10,13 @@
 
 @implementation YUNowWeather
 
+- (void)setUpdateTime:(NSString *)updateTime
+{
+    _updateTime = updateTime;
+    
+
+}
+
+
+
 @end

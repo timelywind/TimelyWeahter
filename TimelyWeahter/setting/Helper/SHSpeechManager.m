@@ -5,27 +5,43 @@
 
 #import "SHSpeechManager.h"
 
-static SHSpeechManager *speechManager = nil;
+//static SHSpeechManager *speechManager = nil;
 
 @implementation SHSpeechManager
 
-+ (SHSpeechManager *)shareManager{
-    
-    return [[self alloc] init];
-}
-
-+ (instancetype)allocWithZone:(struct _NSZone *)zone
-{
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        speechManager = [super allocWithZone:zone];
-        
-    });
-    return speechManager;
-}
+//+ (SHSpeechManager *)shareManager{
+//
+//    return [[self alloc] init];
+//}
+//
+//+ (instancetype)allocWithZone:(struct _NSZone *)zone
+//{
+//    static dispatch_once_t onceToken;
+//    dispatch_once(&onceToken, ^{
+//        speechManager = [super allocWithZone:zone];
+//
+//    });
+//    return speechManager;
+//}
 
 
 #pragma mark --****************   设置本地通知
+// 延时多少秒通知
++ (void)registerNotificationAfterDelay:(NSTimeInterval)delay isRepeat:(BOOL)isRepeat
+{
+    UILocalNotification *notification = [self notification];
+    NSInteger repeatInterval = 0;
+    if (isRepeat) {
+        repeatInterval = kCFCalendarUnitMinute;
+    }
+    NSDictionary *userDict = [NSDictionary dictionaryWithObject:@"YUSecond" forKey:@"YUSecond"];
+    notification.userInfo = userDict;
+    notification.repeatInterval = repeatInterval;
+    notification.fireDate = [NSDate dateWithTimeIntervalSinceNow:delay];
+    [[UIApplication sharedApplication] scheduleLocalNotification:notification];
+}
+
+
 // 设置本地通知
 + (void)registerNotificationWithWeekArray:(NSArray *)weekArray time:(NSString *)time{
     
@@ -115,11 +131,10 @@ static SHSpeechManager *speechManager = nil;
     //    notification.alertTitle = @"Hello!";
     notification.alertBody =  @"📢 亲，您预约的时间到了，点击查看吧~";
     notification.applicationIconBadgeNumber = 1;
-//    [UIApplication sharedApplication].applicationIconBadgeNumber++;
-    // 通知被触发时播放的声音
+
     notification.soundName = UILocalNotificationDefaultSoundName;
     // 通知参数
-    NSDictionary *userDict = [NSDictionary dictionaryWithObject:@"SHLocalSpeechKey" forKey:@"SHLocalSpeechKey"];
+    NSDictionary *userDict = [NSDictionary dictionaryWithObject:@"SHLocalKey" forKey:@"SHLocalKey"];
     notification.userInfo = userDict;
     
     return notification;
@@ -144,6 +159,11 @@ static SHSpeechManager *speechManager = nil;
             }
         }
     }
+}
+
++ (void)cancelSecondLocalNotification
+{
+    [self cancelLocalNotificationWithKey:@"YUSecond"];
 }
 
 @end

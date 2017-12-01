@@ -25,7 +25,6 @@
 		AE0365911FC5829B0028B828 /* UIView+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = AE03650C1FC5829B0028B828 /* UIView+Extension.m */; };
 		AE0365921FC5829B0028B828 /* UIViewController+AppearController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE03650E1FC5829B0028B828 /* UIViewController+AppearController.m */; };
 		AE0365931FC5829B0028B828 /* YUNewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE0365111FC5829B0028B828 /* YUNewsViewController.m */; };
-		AE0365941FC5829B0028B828 /* TRYCustomHud.m in Sources */ = {isa = PBXBuildFile; fileRef = AE0365151FC5829B0028B828 /* TRYCustomHud.m */; };
 		AE0365951FC5829B0028B828 /* TRYRefreshHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = AE0365171FC5829B0028B828 /* TRYRefreshHeader.m */; };
 		AE0365961FC5829B0028B828 /* TYGuideTool.m in Sources */ = {isa = PBXBuildFile; fileRef = AE0365191FC5829B0028B828 /* TYGuideTool.m */; };
 		AE0365971FC5829B0028B828 /* YUNetHelp.m in Sources */ = {isa = PBXBuildFile; fileRef = AE03651B1FC5829B0028B828 /* YUNetHelp.m */; };
@@ -56,6 +55,9 @@
 		AE0662DF1FD00CBE000BAF62 /* loading_gif_03@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AE0662DA1FD00CBE000BAF62 /* loading_gif_03@2x.png */; };
 		AE0662E01FD00CBE000BAF62 /* loading_gif_04@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AE0662DB1FD00CBE000BAF62 /* loading_gif_04@2x.png */; };
 		AE0662E11FD00CBE000BAF62 /* loading_gif_05@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AE0662DC1FD00CBE000BAF62 /* loading_gif_05@2x.png */; };
+		AE2489451FD13FBD001689C3 /* YUPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = AE2489441FD13FBD001689C3 /* YUPickerView.m */; };
+		AEFC0ADF1FD0EC1600513D2D /* YUWeatherDataCacheHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = AEFC0ADE1FD0EC1600513D2D /* YUWeatherDataCacheHelper.m */; };
+		AEFC0AE21FD127AA00513D2D /* YUCustomHud.m in Sources */ = {isa = PBXBuildFile; fileRef = AEFC0AE11FD127AA00513D2D /* YUCustomHud.m */; };
 		AEFEF3B11FCFD33000B0799E /* SHSpeechManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AEFEF3B01FCFD33000B0799E /* SHSpeechManager.m */; };
 		AEFEF3B41FCFDA3F00B0799E /* YUSetNotificationController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEFEF3B31FCFDA3F00B0799E /* YUSetNotificationController.m */; };
 		AEFEF3B81FCFDF2100B0799E /* StoryboardSet.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AEFEF3B71FCFDF2100B0799E /* StoryboardSet.storyboard */; };
@@ -108,8 +110,6 @@
 		AE0365101FC5829B0028B828 /* YUNewsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUNewsViewController.h; sourceTree = "<group>"; };
 		AE0365111FC5829B0028B828 /* YUNewsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUNewsViewController.m; sourceTree = "<group>"; };
 		AE0365131FC5829B0028B828 /* PreConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreConfig.h; sourceTree = "<group>"; };
-		AE0365141FC5829B0028B828 /* TRYCustomHud.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TRYCustomHud.h; sourceTree = "<group>"; };
-		AE0365151FC5829B0028B828 /* TRYCustomHud.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TRYCustomHud.m; sourceTree = "<group>"; };
 		AE0365161FC5829B0028B828 /* TRYRefreshHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TRYRefreshHeader.h; sourceTree = "<group>"; };
 		AE0365171FC5829B0028B828 /* TRYRefreshHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TRYRefreshHeader.m; sourceTree = "<group>"; };
 		AE0365181FC5829B0028B828 /* TYGuideTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TYGuideTool.h; sourceTree = "<group>"; };
@@ -162,6 +162,12 @@
 		AE0662DA1FD00CBE000BAF62 /* loading_gif_03@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loading_gif_03@2x.png"; sourceTree = "<group>"; };
 		AE0662DB1FD00CBE000BAF62 /* loading_gif_04@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loading_gif_04@2x.png"; sourceTree = "<group>"; };
 		AE0662DC1FD00CBE000BAF62 /* loading_gif_05@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loading_gif_05@2x.png"; sourceTree = "<group>"; };
+		AE2489431FD13FBD001689C3 /* YUPickerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YUPickerView.h; sourceTree = "<group>"; };
+		AE2489441FD13FBD001689C3 /* YUPickerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YUPickerView.m; sourceTree = "<group>"; };
+		AEFC0ADD1FD0EC1600513D2D /* YUWeatherDataCacheHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YUWeatherDataCacheHelper.h; sourceTree = "<group>"; };
+		AEFC0ADE1FD0EC1600513D2D /* YUWeatherDataCacheHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YUWeatherDataCacheHelper.m; sourceTree = "<group>"; };
+		AEFC0AE01FD127AA00513D2D /* YUCustomHud.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YUCustomHud.h; sourceTree = "<group>"; };
+		AEFC0AE11FD127AA00513D2D /* YUCustomHud.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YUCustomHud.m; sourceTree = "<group>"; };
 		AEFEF3AF1FCFD33000B0799E /* SHSpeechManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHSpeechManager.h; sourceTree = "<group>"; };
 		AEFEF3B01FCFD33000B0799E /* SHSpeechManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHSpeechManager.m; sourceTree = "<group>"; };
 		AEFEF3B21FCFDA3F00B0799E /* YUSetNotificationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YUSetNotificationController.h; sourceTree = "<group>"; };
@@ -227,6 +233,8 @@
 		AE0364DE1FC5829B0028B828 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				AEFC0AE01FD127AA00513D2D /* YUCustomHud.h */,
+				AEFC0AE11FD127AA00513D2D /* YUCustomHud.m */,
 				AE0364DF1FC5829B0028B828 /* CustomNavigationBar.h */,
 				AE0364E01FC5829B0028B828 /* CustomNavigationBar.m */,
 				AE0364E11FC5829B0028B828 /* TRYBaseTableView.h */,
@@ -426,8 +434,6 @@
 			isa = PBXGroup;
 			children = (
 				AE0365131FC5829B0028B828 /* PreConfig.h */,
-				AE0365141FC5829B0028B828 /* TRYCustomHud.h */,
-				AE0365151FC5829B0028B828 /* TRYCustomHud.m */,
 				AE0365161FC5829B0028B828 /* TRYRefreshHeader.h */,
 				AE0365171FC5829B0028B828 /* TRYRefreshHeader.m */,
 				AE0365181FC5829B0028B828 /* TYGuideTool.h */,
@@ -441,6 +447,7 @@
 		AE03651C1FC5829B0028B828 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				AEFC0ADC1FD0EBD300513D2D /* Helper */,
 				AE03651D1FC5829B0028B828 /* Controller */,
 				AE0365221FC5829B0028B828 /* Model */,
 				AE0365291FC5829B0028B828 /* View */,
@@ -567,6 +574,15 @@
 			path = image;
 			sourceTree = "<group>";
 		};
+		AEFC0ADC1FD0EBD300513D2D /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				AEFC0ADD1FD0EC1600513D2D /* YUWeatherDataCacheHelper.h */,
+				AEFC0ADE1FD0EC1600513D2D /* YUWeatherDataCacheHelper.m */,
+			);
+			path = Helper;
+			sourceTree = "<group>";
+		};
 		AEFEF3AE1FCFD33000B0799E /* Helper */ = {
 			isa = PBXGroup;
 			children = (
@@ -581,6 +597,8 @@
 			children = (
 				AEFF4EDA1FCBE51600860E3F /* SHWeekDayTableViewCell.h */,
 				AEFF4EDB1FCBE51600860E3F /* SHWeekDayTableViewCell.m */,
+				AE2489431FD13FBD001689C3 /* YUPickerView.h */,
+				AE2489441FD13FBD001689C3 /* YUPickerView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -786,7 +804,6 @@
 				AE0365861FC5829B0028B828 /* Foundation+Log.m in Sources */,
 				AE03659C1FC5829B0028B828 /* YUWeatherDataModel.m in Sources */,
 				AE03659E1FC5829B0028B828 /* YULivingIndexCell.m in Sources */,
-				AE0365941FC5829B0028B828 /* TRYCustomHud.m in Sources */,
 				AE03658D1FC5829B0028B828 /* UIColor+Extension.m in Sources */,
 				AE03659B1FC5829B0028B828 /* YUNowWeather.m in Sources */,
 				AE0365951FC5829B0028B828 /* TRYRefreshHeader.m in Sources */,
@@ -794,6 +811,8 @@
 				AE03658A1FC5829B0028B828 /* NSString+File.m in Sources */,
 				AE0365DC1FC5829B0028B828 /* TLCityHeaderView.m in Sources */,
 				BC8B8EA81C85409100044209 /* main.m in Sources */,
+				AEFC0ADF1FD0EC1600513D2D /* YUWeatherDataCacheHelper.m in Sources */,
+				AEFC0AE21FD127AA00513D2D /* YUCustomHud.m in Sources */,
 				AE0365931FC5829B0028B828 /* YUNewsViewController.m in Sources */,
 				AE0365841FC5829B0028B828 /* CustomNavigationBar.m in Sources */,
 				AEFF4EDC1FCBE51600860E3F /* SHWeekDayTableViewCell.m in Sources */,
@@ -808,6 +827,7 @@
 				AE0365851FC5829B0028B828 /* TRYBaseTableView.m in Sources */,
 				AE03659D1FC5829B0028B828 /* YUHeaderView.m in Sources */,
 				AE0365A21FC5829B0028B828 /* YUVerticalButton.m in Sources */,
+				AE2489451FD13FBD001689C3 /* YUPickerView.m in Sources */,
 				AE0365DA1FC5829B0028B828 /* TLCity.m in Sources */,
 				AE0365DB1FC5829B0028B828 /* TLCityGroupCell.m in Sources */,
 				AE0365831FC5829B0028B828 /* TRYBaseViewController.m in Sources */,

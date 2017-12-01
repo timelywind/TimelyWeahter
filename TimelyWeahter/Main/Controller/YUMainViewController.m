@@ -23,9 +23,10 @@
 #import "YUNavigationController.h"
 #import "TRYRefreshHeader.h"
 #import "PreConfig.h"
-#import "TRYCustomHud.h"
+#import "YUCustomHud.h"
 #import "UIImage+Color.h"
 #import "UIViewController+AppearController.h"
+#import "YUWeatherDataCacheHelper.h"
 
 static NSString *TYCityName = @"TYCityName";
 
@@ -46,6 +47,7 @@ static NSString *TYCityName = @"TYCityName";
 @property (nonatomic, strong) NSString *locationCity;
 
 @property (nonatomic, strong) UIButton *btn;
+
 @end
 
 @implementation YUMainViewController
@@ -69,12 +71,13 @@ static NSString *TYCityName = @"TYCityName";
     NSString * city = [df objectForKey:TYCityName];
     self.area = city ? city: @"北京市";
     
-    [self loadWeatherWithRefresh];
+    [self firstLoadWeather];
     
 //    [[YUNetHelp shareManager]  isReachToWeb];
     
     [self.view insertSubview:self.customNavigationBar aboveSubview:self.tableView];
     self.customNavigationBar.backgroundColor = WColorRGBA(1, 1, 1, 0.03);
+  
 }
 
 - (void)controllerWillAppear{
@@ -83,6 +86,16 @@ static NSString *TYCityName = @"TYCityName";
 
 - (void)controllerWillDisappear{
     [self.navigationController setNavigationBarHidden:NO animated:YES];
+}
+
+- (void)firstLoadWeather
+{
+    NSDictionary *dataDict = [YUWeatherDataCacheHelper getMainWeatherDataCache];
+    if ([dataDict[@"YUCity"] isEqualToString:self.area] && [dataDict isKindOfClass:[NSDictionary class]]) {
+        [self configWeatherDataWithDict:dataDict.mutableCopy city:self.area];
+    } else {
+        [self loadWeatherWithRefresh];
+    }
 }
 
 - (void)loadWeatherWithRefresh
@@ -147,69 +160,83 @@ static NSString *TYCityName = @"TYCityName";
         return;
     }
 
-    self.area = area;
+    if (!self.weatherModels.count) {
+        [YUCustomHud showInView:self.view];
+    }
     
     __weak typeof (self) weakSelf = self;
     [YUNetHelp requestWeatherForCity:area complete:^(BOOL success, id result) {
         [self.tableView.mj_header endRefreshing];
+        [YUCustomHud dismiss];
         if (success) {
 
             NSError *error = nil;
             NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:result options:NSJSONReadingMutableContainers error:&error];
-            
-            
+
             NSDictionary *tmpDict = dict[@"showapi_res_body"];
-            NSMutableArray *tmpArrayM = [NSMutableArray array];
-            
-//            NSString *date = tmpDict[@"time"];
-            
-            for (NSString *key in tmpDict.allKeys) {
-                if (key.length == 2) {
-                    YUWeatherDataModel *weatherModel = [YUWeatherDataModel mj_objectWithKeyValues:tmpDict[key]];
-                    [tmpArrayM addObject:weatherModel];
-                }
-            }
-            
-            NSSortDescriptor *day = [NSSortDescriptor sortDescriptorWithKey:@"day" ascending:YES];
-            NSArray *tmpArray = [tmpArrayM sortedArrayUsingDescriptors: [NSArray arrayWithObjects:day, nil]];
-            
-            if (tmpArray.count > 6) {
-                // 天气模型
-                self.weatherModels = tmpArray;
-                // 生活指数模型
-                YULivingIndexModel *livingIndexModel = [YULivingIndexModel mj_objectWithKeyValues:tmpDict[@"f1"][@"index"]];
-                // 当前天气模型
-                YUNowWeather *nowWeather =[YUNowWeather mj_objectWithKeyValues:tmpDict[@"now"]];
-                nowWeather.city = tmpDict[@"cityInfo"][@"c3"];
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    
-                    weakSelf.topView.weatherModels = weakSelf.weatherModels;
-                    weakSelf.topView.nowWeather = nowWeather;
-                    weakSelf.lvingIndexModel = livingIndexModel;
-                });
-                
-                [UIView animateWithDuration:0.2 animations:^{
-                    _tableView.alpha = 1;
-                }];
-                
-                NSUserDefaults * df = [NSUserDefaults standardUserDefaults];
-                [df setObject:area forKey:@"TYCityName"];
-                [df synchronize];
-                
-                self.titleStr = area;
-            }
-            
+            [self configWeatherDataWithDict:tmpDict.mutableCopy city:area];
             [weakSelf.tableView reloadData];
-            
-//            NSDictionary *modelDict =
             
         } else {
             [weakSelf.tableView reloadData];
             self.tableView.alpha = 1.0;
-            [TRYCustomHud showHudWithTipText:@"网络异常，请检查您的网络" delay:0.8];
+            [YUCustomHud showHudWithText:@"网络异常，请检查您的网络" delay:0.8];
         }
     }];
+}
+
+- (void)configWeatherDataWithDict:(NSMutableDictionary *)dataDict city:(NSString *)city
+{
+    NSMutableArray *tmpArrayM = [NSMutableArray array];
     
+    for (NSString *key in dataDict.allKeys) {
+        if (key.length == 2) {
+            YUWeatherDataModel *weatherModel = [YUWeatherDataModel mj_objectWithKeyValues:dataDict[key]];
+            [tmpArrayM addObject:weatherModel];
+        }
+    }
+    
+    NSSortDescriptor *day = [NSSortDescriptor sortDescriptorWithKey:@"day" ascending:YES];
+    NSArray *tmpArray = [tmpArrayM sortedArrayUsingDescriptors: [NSArray arrayWithObjects:day, nil]];
+    
+    if (tmpArray.count > 6) {
+        // 天气模型
+        self.weatherModels = tmpArray;
+        // 生活指数模型
+        YULivingIndexModel *livingIndexModel = [YULivingIndexModel mj_objectWithKeyValues:dataDict[@"f1"][@"index"]];
+        // 当前天气模型
+        YUNowWeather *nowWeather =[YUNowWeather mj_objectWithKeyValues:dataDict[@"now"]];
+        nowWeather.city = dataDict[@"cityInfo"][@"c3"];
+        
+        NSString *updateTime = dataDict[@"updateTime"];
+        if (!updateTime) {
+            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+            [formatter setDateFormat:@"MM-dd HH:mm"];
+            updateTime = [formatter stringFromDate: [NSDate date]];
+            [dataDict setValue:updateTime forKey:@"updateTime"];
+        }
+        nowWeather.updateTime = updateTime;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            self.topView.weatherModels = self.weatherModels;
+            self.topView.nowWeather = nowWeather;
+            self.lvingIndexModel = livingIndexModel;
+        });
+        
+        [UIView animateWithDuration:0.2 animations:^{
+            _tableView.alpha = 1;
+        }];
+        
+        if (city.length) {
+            NSUserDefaults * df = [NSUserDefaults standardUserDefaults];
+            [df setObject:city forKey:@"TYCityName"];
+            [df synchronize];
+            [dataDict setValue:city forKey:@"YUCity"];
+        }
+        self.titleStr = city;
+        // 设置缓存
+        [YUWeatherDataCacheHelper setWeatherDataCache:dataDict];
+    }
 }
 
 - (void)setupTableView

@@ -29,9 +29,6 @@
 - (void)adaptive_iOS_11
 {
 #ifdef __IPHONE_11_0
-    if ([self respondsToSelector:@selector(setContentInsetAdjustmentBehavior:)]) {
-        self.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-    }
     self.estimatedRowHeight = 0;
     self.estimatedSectionHeaderHeight = 0;
     self.estimatedSectionFooterHeight = 0;
